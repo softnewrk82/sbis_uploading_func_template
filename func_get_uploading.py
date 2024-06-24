@@ -442,7 +442,7 @@ def sbis_real_processing(var_day, var_month, var_year, date_from, date_to):
                             var_inside_doc_item_full_item_price)
             # _________________________________________________________________________________________________________________________________________________            
 
-            def_act_vr_print(var_inside_doc_author, var_inside_doc_type)
+            # def_act_vr_print(var_inside_doc_author, var_inside_doc_type)
             def_act_vr_set_variable(var_inside_doc_author, var_inside_doc_type)
             
     def def_edo_nakl(xml_a, var_inside_doc_author, var_inside_doc_type):
@@ -516,7 +516,11 @@ def sbis_real_processing(var_day, var_month, var_year, date_from, date_to):
                         var_inside_doc_item_unit = xml_a["Файл"]["Документ"]["СвДокПТПрКроме"]["СодФХЖ2"]["СвТов"]["@НаимЕдИзм"]
                     except:
                         var_inside_doc_item_unit = np.nan
-                    var_inside_doc_item_price = xml_a["Файл"]["Документ"]["СвДокПТПрКроме"]["СодФХЖ2"]["СвТов"]["@Цена"]
+                    try:
+                        var_inside_doc_item_price = xml_a["Файл"]["Документ"]["СвДокПТПрКроме"]["СодФХЖ2"]["СвТов"]["@Цена"]
+                    except:
+                        var_inside_doc_item_price = xml_a["Файл"]["Документ"]["СвДокПТПрКроме"]["СодФХЖ2"]["СвТов"]["@СтУчНДС"]
+                        
                     var_inside_doc_item_full_item_price = float(xml_a["Файл"]["Документ"]["СвДокПТПрКроме"]["СодФХЖ2"]["СвТов"]["@СтУчНДС"])
 
                     doc_append()
@@ -559,8 +563,10 @@ def sbis_real_processing(var_day, var_month, var_year, date_from, date_to):
                                 var_inside_doc_item_unit = k["@НаимЕдИзм"]
                             except: 
                                 var_inside_doc_item_unit = np.nan
-                                
-                            var_inside_doc_item_price = k["@Цена"]
+                            try:                                
+                                var_inside_doc_item_price = k["@Цена"]
+                            except:
+                                var_inside_doc_item_price = k["@СтУчНДС"]
                             var_inside_doc_item_full_item_price = float(k["@СтУчНДС"])
                     
             
@@ -578,7 +584,7 @@ def sbis_real_processing(var_day, var_month, var_year, date_from, date_to):
                                 var_inside_doc_item_full_item_price)
             # _________________________________________________________________________________________________________________________________________________            
 
-            def_edo_nakl_print(var_inside_doc_author, var_inside_doc_type)
+            # def_edo_nakl_print(var_inside_doc_author, var_inside_doc_type)
             def_edo_nakl_set_variable(var_inside_doc_author, var_inside_doc_type)
 
     def def_act_pp(xml_a, var_inside_doc_author, var_inside_doc_type):
@@ -758,7 +764,7 @@ def sbis_real_processing(var_day, var_month, var_year, date_from, date_to):
         
             # _________________________________________________________________________________________________________________________________________________            
 
-            def_act_pp_print(var_inside_doc_author, var_inside_doc_type)
+            # def_act_pp_print(var_inside_doc_author, var_inside_doc_type)
             def_act_pp_set_variable(var_inside_doc_author, var_inside_doc_type)
 
     def def_upd_dop(xml_a, var_inside_doc_author, var_inside_doc_type):
@@ -942,7 +948,7 @@ def sbis_real_processing(var_day, var_month, var_year, date_from, date_to):
                             var_inside_doc_item_full_item_price)    
             # _________________________________________________________________________________________________________________________________________________            
 
-            def_upd_dop_print(var_inside_doc_author, var_inside_doc_type)
+            # def_upd_dop_print(var_inside_doc_author, var_inside_doc_type)
             def_upd_dop_set_variable(var_inside_doc_author, var_inside_doc_type)
 
     def def_upd_s_dop(xml_a, var_inside_doc_author, var_inside_doc_type):
@@ -1117,7 +1123,7 @@ def sbis_real_processing(var_day, var_month, var_year, date_from, date_to):
                             var_inside_doc_item_full_item_price)      
             # _________________________________________________________________________________________________________________________________________________            
 
-            def_upd_s_dop_print(var_inside_doc_author, var_inside_doc_type)
+            # def_upd_s_dop_print(var_inside_doc_author, var_inside_doc_type)
             def_upd_s_dop_set_variable(var_inside_doc_author, var_inside_doc_type)
             
             
@@ -1236,7 +1242,7 @@ def sbis_real_processing(var_day, var_month, var_year, date_from, date_to):
         
         j = 0
         for i in str_to_dict_points_main["result"]["Документ"]:
-            print(j)
+            # print(j)
             j += 1
             if (re.findall("реал", i["Регламент"]["Название"].lower())[-1] == "реал") and (i["Расширение"]["Проведен"].lower() == 'да'):
     # ___________________________________________________________________________________________
@@ -1269,34 +1275,7 @@ def sbis_real_processing(var_day, var_month, var_year, date_from, date_to):
                 except:
                     var_doc_department = np.nan    
     # ___________________________________________________________________________________________
-                print("var_link", var_link)
-                print("var_doc_type", i["Регламент"]["Название"])
 
-                print("var_doc_number", i["Номер"])
-                print("var_doc_full_name", i["Название"])
-                try:
-                    print("var_doc_data_main", i["Дата"])
-                except:
-                    print("var_doc_data_main", np.nan)
-                print("var_doc_at_created", i["ДатаВремяСоздания"])
-                try:
-                    print("var_doc_counterparty_inn", i["Контрагент"]["СвФЛ"]["ИНН"])
-                    print("var_doc_counterparty_full_name", i["Контрагент"]["СвФЛ"]["НазваниеПолное"])
-                except:
-                    print("var_doc_counterparty_inn", i["Контрагент"]["СвЮЛ"]["ИНН"])
-                    print("var_doc_counterparty_full_name", i["Контрагент"]["СвЮЛ"]["НазваниеПолное"])           
-                try:
-                    print("var_doc_provider_inn", i["НашаОрганизация"]["СвФЛ"]["ИНН"])
-                    print("var_doc_provider_full_name", i["НашаОрганизация"]["СвФЛ"]["НазваниеПолное"])
-                except:
-                    print("var_doc_provider_inn", i["НашаОрганизация"]["СвЮЛ"]["ИНН"])
-                    print("var_doc_provider_full_name", i["НашаОрганизация"]["СвЮЛ"]["НазваниеПолное"])
-            
-                print("var_doc_assigned_manager", doc_manager_name)
-                try:
-                    print("var_doc_department", i["Подразделение"]["Название"])
-                except:
-                    print("var_doc_department", np.nan)
     # ___________________________________________________________________________________________
 
                 parameters_real = {
@@ -1316,15 +1295,68 @@ def sbis_real_processing(var_day, var_month, var_year, date_from, date_to):
                 response_points = requests.post(url_real, json=parameters_real, headers=headers)
                 str_to_dict_points = json.loads(response_points.text)
     # ___________________________________________________________________________________________
-                author_list = [str_to_dict_points["result"]["Автор"]["Имя"], str_to_dict_points["result"]["Автор"]["Фамилия"], str_to_dict_points["result"]["Автор"]["Отчество"]]
-                print("автор:", " ".join(author_list))
-                var_inside_doc_author = " ".join(author_list)
+                
+                # author_list = [str_to_dict_points["result"]["Автор"]["Имя"], str_to_dict_points["result"]["Автор"]["Фамилия"], str_to_dict_points["result"]["Автор"]["Отчество"]]
+                try:
+                    name = str_to_dict_points["result"]["Автор"]["Имя"]
+                except:
+                    name = ""
+                try:
+                    second_name = str_to_dict_points["result"]["Автор"]["Фамилия"]
+                except:
+                    second_name = ""
+                try:
+                    surname_name = str_to_dict_points["result"]["Автор"]["Отчество"]
+                except:
+                    surname_name = ""
+            
+                author_list = [name, second_name, surname_name]
+                
+                # print("автор:", " ".join(author_list).strip())
+                var_inside_doc_author = " ".join(author_list).strip()
+                
+    # ___________________________________________________________________________________________
+           
+                def common_part_print():
+                    print(j)
+                    print("var_link", var_link)
+                    print("var_doc_type", i["Регламент"]["Название"])
+
+                    print("var_doc_number", i["Номер"])
+                    print("var_doc_full_name", i["Название"])
+                    try:
+                        print("var_doc_data_main", i["Дата"])
+                    except:
+                        print("var_doc_data_main", np.nan)
+                    print("var_doc_at_created", i["ДатаВремяСоздания"])
+                    try:
+                        print("var_doc_counterparty_inn", i["Контрагент"]["СвФЛ"]["ИНН"])
+                        print("var_doc_counterparty_full_name", i["Контрагент"]["СвФЛ"]["НазваниеПолное"])
+                    except:
+                        print("var_doc_counterparty_inn", i["Контрагент"]["СвЮЛ"]["ИНН"])
+                        print("var_doc_counterparty_full_name", i["Контрагент"]["СвЮЛ"]["НазваниеПолное"])           
+                    try:
+                        print("var_doc_provider_inn", i["НашаОрганизация"]["СвФЛ"]["ИНН"])
+                        print("var_doc_provider_full_name", i["НашаОрганизация"]["СвФЛ"]["НазваниеПолное"])
+                    except:
+                        print("var_doc_provider_inn", i["НашаОрганизация"]["СвЮЛ"]["ИНН"])
+                        print("var_doc_provider_full_name", i["НашаОрганизация"]["СвЮЛ"]["НазваниеПолное"])
+                
+                    print("var_doc_assigned_manager", doc_manager_name)
+                    try:
+                        print("var_doc_department", i["Подразделение"]["Название"])
+                    except:
+                        print("var_doc_department", np.nan)
+                    print("автор:", " ".join(author_list).strip())
+                    
+                # common_part_print()
+
     # ___________________________________________________________________________________________
                 attachments_id = {}
                 try:
                     for i in range(len(str_to_dict_points["result"]["ВложениеУчета"])):
                         if str_to_dict_points["result"]["ВложениеУчета"][i]["Тип"].lower() in ("актпп", "актвр", "эдонакл", "упддоп", "упдсчфдоп"):
-                            print(str_to_dict_points["result"]["ВложениеУчета"][i]["Тип"].lower())
+                            # print(str_to_dict_points["result"]["ВложениеУчета"][i]["Тип"].lower())
                             attachments_id[str_to_dict_points["result"]["ВложениеУчета"][i]["Тип"].lower()] = str_to_dict_points["result"]["ВложениеУчета"][i]["Файл"]["Ссылка"]
                         else:
                             pass
@@ -1423,9 +1455,9 @@ def sbis_real_processing(var_day, var_month, var_year, date_from, date_to):
         else:
             pass
         var_status_has_more = str_to_dict_points_main["result"]["Навигация"]["ЕстьЕще"]
-        print("ЕстьЕще", var_status_has_more)
-        print("___________________________________________________________________________________________________________________________________________________________")
-        print(f"СЛЕДУЮЩАЯ СТРАНИЦА {i_page}")       
+        # print("ЕстьЕще", var_status_has_more)
+        # print("___________________________________________________________________________________________________________________________________________________________")
+        # print(f"СЛЕДУЮЩАЯ СТРАНИЦА {i_page}")       
             
             
     lst_append = [doc_id,
