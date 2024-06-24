@@ -68,12 +68,19 @@ API_sbis = f_decrypt(var_encryptvar_API_sbis, load_key_external()).decode("utf-8
 API_sbis_pass = f_decrypt(var_encrypt_API_sbis_pass, load_key_external()).decode("utf-8")
 
 
-var_day = '01'
-var_month = '04'
-var_year = '2024'
+# var_day = '01'
+# var_month = '04'
+# var_year = '2024'
+# 
+# date_from = "21.06.2024"
+# date_to = "21.06.2024"
 
-date_from = "21.06.2024"
-date_to = "21.06.2024"
+# var_day = ''
+# var_month = ''
+# var_year = ''
+
+# date_from = ""
+# date_to = ""
 
 
 def sbis_real_processing(var_day, var_month, var_year, date_from, date_to):
@@ -91,19 +98,16 @@ def sbis_real_processing(var_day, var_month, var_year, date_from, date_to):
     var_month = var_month
     var_year = var_year
 
-    # date_from = ".".join([var_day, var_month, var_year])
-    # date_to = ".".join([var_day, var_month, var_year])
-    # date_from = "21.06.2024"
-    # date_to = "21.06.2024"
+
     
     date_from = date_from
     date_to = date_to
 
-    var_now_B = var_now.strftime("%B")
+    # var_now_B = var_now.strftime("%B")
 
     print("date_from:", date_from)
     print("date_to:", date_to)
-    print("var_now_B:", var_now_B)
+    # print("var_now_B:", var_now_B)
 
     name_unloading = f"sbis_{var_year}{var_month}{var_day}_uploading"
     name_unloading_exc = f"sbis_exc_{var_year}{var_month}{var_day}_uploading"
@@ -1149,7 +1153,7 @@ def sbis_real_processing(var_day, var_month, var_year, date_from, date_to):
 
     str_to_dict = json.loads(response.text)
     access_token = str_to_dict["result"]
-    print("access_token:", access_token)
+    # print("access_token:", access_token)
 
     headers = {
     "X-SBISSessionID": access_token,
@@ -1639,4 +1643,4 @@ def sbis_real_processing(var_day, var_month, var_year, date_from, date_to):
         print('my_conn.failed()') 
 
 
-sbis_real_processing(var_day, var_month, var_year, date_from, date_to)
+# sbis_real_processing(var_day, var_month, var_year, date_from, date_to)
