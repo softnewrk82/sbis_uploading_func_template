@@ -1298,8 +1298,6 @@ def sbis_real_processing(var_day, var_month, var_year, date_from, date_to):
                 url_real = url_sbis_unloading
             
                 response_points = requests.post(url_real, json=parameters_real, headers=headers)
-                print(response_points)
-                print(headers)
                 str_to_dict_points = json.loads(response_points.text)
     # ___________________________________________________________________________________________
                 
@@ -1646,4 +1644,4 @@ def sbis_real_processing(var_day, var_month, var_year, date_from, date_to):
         print('my_conn.failed()') 
 
 
-sbis_real_processing('01', '05', '2024', '01.05.2024', '31.05.2024')
+# sbis_real_processing('01', '05', '2024', '01.05.2024', '31.05.2024')
