@@ -1237,6 +1237,7 @@ def sbis_real_processing(var_day, var_month, var_year, date_from, date_to):
         url_real = url_sbis_unloading
         
         response_points = requests.post(url_real, json=parameters_real, headers=headers)
+
         str_to_dict_points_main = json.loads(response_points.text)
         
         json_data_points = json.dumps(str_to_dict_points_main, ensure_ascii=False, indent=4).encode("utf8").decode()
@@ -1297,6 +1298,8 @@ def sbis_real_processing(var_day, var_month, var_year, date_from, date_to):
                 url_real = url_sbis_unloading
             
                 response_points = requests.post(url_real, json=parameters_real, headers=headers)
+                print(response_points)
+                print(headers)
                 str_to_dict_points = json.loads(response_points.text)
     # ___________________________________________________________________________________________
                 
@@ -1358,10 +1361,10 @@ def sbis_real_processing(var_day, var_month, var_year, date_from, date_to):
     # ___________________________________________________________________________________________
                 attachments_id = {}
                 try:
-                    for i in range(len(str_to_dict_points["result"]["ВложениеУчета"])):
-                        if str_to_dict_points["result"]["ВложениеУчета"][i]["Тип"].lower() in ("актпп", "актвр", "эдонакл", "упддоп", "упдсчфдоп"):
-                            # print(str_to_dict_points["result"]["ВложениеУчета"][i]["Тип"].lower())
-                            attachments_id[str_to_dict_points["result"]["ВложениеУчета"][i]["Тип"].lower()] = str_to_dict_points["result"]["ВложениеУчета"][i]["Файл"]["Ссылка"]
+                    for l in range(len(str_to_dict_points["result"]["ВложениеУчета"])):
+                        if str_to_dict_points["result"]["ВложениеУчета"][l]["Тип"].lower() in ("актпп", "актвр", "эдонакл", "упддоп", "упдсчфдоп"):
+                            # print(str_to_dict_points["result"]["ВложениеУчета"][l]["Тип"].lower())
+                            attachments_id[str_to_dict_points["result"]["ВложениеУчета"][l]["Тип"].lower()] = str_to_dict_points["result"]["ВложениеУчета"][l]["Файл"]["Ссылка"]
                         else:
                             pass
                 except:
@@ -1643,4 +1646,4 @@ def sbis_real_processing(var_day, var_month, var_year, date_from, date_to):
         print('my_conn.failed()') 
 
 
-# sbis_real_processing(var_day, var_month, var_year, date_from, date_to)
+sbis_real_processing('01', '05', '2024', '01.05.2024', '31.05.2024')
