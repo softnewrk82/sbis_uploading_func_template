@@ -508,14 +508,26 @@ def sbis_real_processing(var_day, var_month, var_year, date_from, date_to):
                     var_inside_doc_item_note = ""
                     var_inside_doc_author = var_inside_doc_author
                     var_inside_doc_type = var_inside_doc_type
-                    var_inside_doc_item_full_doc_price = xml_a["Файл"]["Документ"]["СвДокПТПрКроме"]["СодФХЖ2"]["СвТов"]["@СтУчНДС"]
-                    var_inside_doc_item_code = xml_a["Файл"]["Документ"]["СвДокПТПрКроме"]["СодФХЖ2"]["СвТов"]["@КодТов"]
+                    try: 
+                        var_inside_doc_item_full_doc_price = xml_a["Файл"]["Документ"]["СвДокПТПрКроме"]["СодФХЖ2"]["СвТов"]["@СтУчНДС"]
+                    except: 
+                        var_inside_doc_item_full_doc_price = np.nan
+                    try:
+                        var_inside_doc_item_code = xml_a["Файл"]["Документ"]["СвДокПТПрКроме"]["СодФХЖ2"]["СвТов"]["@КодТов"]
+                    except:
+                        var_inside_doc_item_code = np.nan
                     try:
                         var_inside_doc_item_article = xml_a["Файл"]["Документ"]["СвДокПТПрКроме"]["СодФХЖ2"]["СвТов"]["@АртикулТов"]
                     except:
                         var_inside_doc_item_article = np.nan
-                    var_inside_doc_item_name = xml_a["Файл"]["Документ"]["СвДокПТПрКроме"]["СодФХЖ2"]["СвТов"]["@НаимТов"]
-                    var_inside_doc_item_quantity = xml_a["Файл"]["Документ"]["СвДокПТПрКроме"]["СодФХЖ2"]["СвТов"]["@НеттоПередано"]
+                    try:
+                        var_inside_doc_item_name = xml_a["Файл"]["Документ"]["СвДокПТПрКроме"]["СодФХЖ2"]["СвТов"]["@НаимТов"]
+                    except:
+                        var_inside_doc_item_name = np.nan
+                    try:
+                        var_inside_doc_item_quantity = xml_a["Файл"]["Документ"]["СвДокПТПрКроме"]["СодФХЖ2"]["СвТов"]["@НеттоПередано"]
+                    except: 
+                        var_inside_doc_item_quantity = np.nan
                     try:
                         var_inside_doc_item_unit = xml_a["Файл"]["Документ"]["СвДокПТПрКроме"]["СодФХЖ2"]["СвТов"]["@НаимЕдИзм"]
                     except:
@@ -525,7 +537,10 @@ def sbis_real_processing(var_day, var_month, var_year, date_from, date_to):
                     except:
                         var_inside_doc_item_price = xml_a["Файл"]["Документ"]["СвДокПТПрКроме"]["СодФХЖ2"]["СвТов"]["@СтУчНДС"]
                         
-                    var_inside_doc_item_full_item_price = float(xml_a["Файл"]["Документ"]["СвДокПТПрКроме"]["СодФХЖ2"]["СвТов"]["@СтУчНДС"])
+                    try:
+                        var_inside_doc_item_full_item_price = float(xml_a["Файл"]["Документ"]["СвДокПТПрКроме"]["СодФХЖ2"]["СвТов"]["@СтУчНДС"])
+                    except:
+                        var_inside_doc_item_full_item_price = np.nan
 
                     doc_append()
                     inside_doc_append(var_inside_doc_author,
@@ -546,7 +561,10 @@ def sbis_real_processing(var_day, var_month, var_year, date_from, date_to):
                         
                     
                         for k in xml_a["Файл"]["Документ"]["СвДокПТПрКроме"]["СодФХЖ2"]["СвТов"]:
-                            sum_inside_doc += float(k["@СтУчНДС"])
+                            try:
+                                sum_inside_doc += float(k["@СтУчНДС"])
+                            except:
+                                sum_inside_doc += 0
                         
                         for k in xml_a["Файл"]["Документ"]["СвДокПТПрКроме"]["СодФХЖ2"]["СвТов"]: 
                             
@@ -554,15 +572,26 @@ def sbis_real_processing(var_day, var_month, var_year, date_from, date_to):
 
                             var_inside_doc_author = var_inside_doc_author
                             var_inside_doc_type = var_inside_doc_type
-                            var_inside_doc_item_full_doc_price = sum_inside_doc
-                            var_inside_doc_item_code =  k["@КодТов"]
+                            try:
+                                var_inside_doc_item_full_doc_price = sum_inside_doc
+                            except: 
+                                var_inside_doc_item_full_doc_price = np.nan
+                            try:
+                                var_inside_doc_item_code =  k["@КодТов"]
+                            except: 
+                                var_inside_doc_item_code = np.nan
                             try:
                                 var_inside_doc_item_article = k["@АртикулТов"]
                             except:
                                 var_inside_doc_item_article = np.nan
-                                
-                            var_inside_doc_item_name = k["@НаимТов"]
-                            var_inside_doc_item_quantity =  k["@НеттоПередано"]
+                            try:
+                                var_inside_doc_item_name = k["@НаимТов"]
+                            except:
+                                var_inside_doc_item_name = np.nan
+                            try:
+                                var_inside_doc_item_quantity =  k["@НеттоПередано"]
+                            except:
+                                var_inside_doc_item_quantity = np.nan
                             try:
                                 var_inside_doc_item_unit = k["@НаимЕдИзм"]
                             except: 
@@ -571,7 +600,10 @@ def sbis_real_processing(var_day, var_month, var_year, date_from, date_to):
                                 var_inside_doc_item_price = k["@Цена"]
                             except:
                                 var_inside_doc_item_price = k["@СтУчНДС"]
-                            var_inside_doc_item_full_item_price = float(k["@СтУчНДС"])
+                            try:
+                                var_inside_doc_item_full_item_price = float(k["@СтУчНДС"])
+                            except:
+                                var_inside_doc_item_full_item_price = np.nan
                     
             
                             doc_append()
@@ -1298,6 +1330,8 @@ def sbis_real_processing(var_day, var_month, var_year, date_from, date_to):
                 url_real = url_sbis_unloading
             
                 response_points = requests.post(url_real, json=parameters_real, headers=headers)
+                # print(response_points)
+                # print(headers)
                 str_to_dict_points = json.loads(response_points.text)
     # ___________________________________________________________________________________________
                 
