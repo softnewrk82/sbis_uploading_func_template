@@ -1283,30 +1283,79 @@ def sbis_real_processing(var_day, var_month, var_year, date_from, date_to):
             j += 1
             if (re.findall("реал", i["Регламент"]["Название"].lower())[-1] == "реал") and (i["Расширение"]["Проведен"].lower() == 'да'):
     # ___________________________________________________________________________________________
-                var_link = i["Идентификатор"]
-                doc_manager_name = " ".join([str(i["Ответственный"]["Фамилия"]), str(i["Ответственный"]["Имя"]), str(i["Ответственный"]["Отчество"])])
+                
+                try:
+                    var_link = i["Идентификатор"]
+                except:
+                    var_link = np.nan
 
-                var_doc_type = i["Регламент"]["Название"]
-                var_doc_number = i["Номер"] 
-                var_doc_full_name = i["Название"]
+                try:
+                    doc_manager_first_name = str(i["Ответственный"]["Имя"])
+                except:
+                    doc_manager_first_name = ""
+                try:
+                    doc_manager_last_name = str(i["Ответственный"]["Фамилия"])
+                except:
+                    doc_manager_last_name = ""
+                try:
+                    doc_manager_surname_name = str(i["Ответственный"]["Отчество"])
+                except:
+                    doc_manager_surname_name = ""
+
+                try:
+                    doc_manager_name = " ".join([doc_manager_last_name, doc_manager_first_name, doc_manager_surname_name])
+                except:
+                    doc_manager_name = np.nan
+
+                try:
+                    var_doc_type = i["Регламент"]["Название"]
+                except:
+                    var_doc_type = np.nan
+
+                try:
+                    var_doc_number = i["Номер"] 
+                except:
+                    var_doc_number = np.nan
+
+                try:
+                    var_doc_full_name = i["Название"]
+                except:
+                    var_doc_full_name = np.nan
+
                 try:
                     var_doc_data_main = i["Дата"]
                 except:
                     var_doc_data_main = np.nan
-                var_doc_at_created = i["ДатаВремяСоздания"]
+
                 try:
-                    var_doc_counterparty_inn = i["Контрагент"]["СвФЛ"]["ИНН"]
-                    var_doc_counterparty_full_name = i["Контрагент"]["СвФЛ"]["НазваниеПолное"]
+                    var_doc_at_created = i["ДатаВремяСоздания"]
                 except:
-                    var_doc_counterparty_inn = i["Контрагент"]["СвЮЛ"]["ИНН"]
-                    var_doc_counterparty_full_name = i["Контрагент"]["СвЮЛ"]["НазваниеПолное"]
+                    var_doc_at_created = np.nan
                 try:
-                    var_doc_provider_inn = i["НашаОрганизация"]["СвФЛ"]["ИНН"]
-                    var_doc_provider_full_name = i["НашаОрганизация"]["СвФЛ"]["НазваниеПолное"]
+                    try:
+                        var_doc_counterparty_inn = i["Контрагент"]["СвФЛ"]["ИНН"]
+                        var_doc_counterparty_full_name = i["Контрагент"]["СвФЛ"]["НазваниеПолное"]
+                    except:
+                        var_doc_counterparty_inn = i["Контрагент"]["СвЮЛ"]["ИНН"]
+                        var_doc_counterparty_full_name = i["Контрагент"]["СвЮЛ"]["НазваниеПолное"]
                 except:
-                    var_doc_provider_inn = i["НашаОрганизация"]["СвЮЛ"]["ИНН"]
-                    var_doc_provider_full_name = i["НашаОрганизация"]["СвЮЛ"]["НазваниеПолное"]
-                var_doc_assigned_manager = doc_manager_name
+                    var_doc_counterparty_inn = np.nan
+                    var_doc_counterparty_full_name = np.nan
+                try:
+                    try:
+                        var_doc_provider_inn = i["НашаОрганизация"]["СвФЛ"]["ИНН"]
+                        var_doc_provider_full_name = i["НашаОрганизация"]["СвФЛ"]["НазваниеПолное"]
+                    except:
+                        var_doc_provider_inn = i["НашаОрганизация"]["СвЮЛ"]["ИНН"]
+                        var_doc_provider_full_name = i["НашаОрганизация"]["СвЮЛ"]["НазваниеПолное"]
+                except:
+                    var_doc_provider_inn = np.nan
+                    var_doc_provider_full_name = np.nan
+
+                try:
+                    var_doc_assigned_manager = doc_manager_name
+                except:
+                    var_doc_assigned_manager = np.nan
                 try:
                     var_doc_department = i["Подразделение"]["Название"]
                 except:
@@ -1352,41 +1401,73 @@ def sbis_real_processing(var_day, var_month, var_year, date_from, date_to):
                 author_list = [name, second_name, surname_name]
                 
                 # print("автор:", " ".join(author_list).strip())
-                var_inside_doc_author = " ".join(author_list).strip()
+                try:
+                    var_inside_doc_author = " ".join(author_list).strip()
+                except:
+                    var_inside_doc_author = np.nan
                 
     # ___________________________________________________________________________________________
            
                 def common_part_print():
                     print(j)
-                    print("var_link", var_link)
-                    print("var_doc_type", i["Регламент"]["Название"])
+                    try:
+                        print("var_link", var_link)
+                    except:
+                        print("var_link", np.nan)
+                    try:
+                        print("var_doc_type", i["Регламент"]["Название"])
+                    except:
+                        print("var_doc_type", np.nan)
+                    try:
+                        print("var_doc_number", i["Номер"])
+                    except:
+                        print("var_doc_number", np.nan)
+                    try:
+                        print("var_doc_full_name", i["Название"])
+                    except:
+                        print("var_doc_full_name", np.nan)
 
-                    print("var_doc_number", i["Номер"])
-                    print("var_doc_full_name", i["Название"])
                     try:
                         print("var_doc_data_main", i["Дата"])
                     except:
                         print("var_doc_data_main", np.nan)
-                    print("var_doc_at_created", i["ДатаВремяСоздания"])
                     try:
-                        print("var_doc_counterparty_inn", i["Контрагент"]["СвФЛ"]["ИНН"])
-                        print("var_doc_counterparty_full_name", i["Контрагент"]["СвФЛ"]["НазваниеПолное"])
+                        print("var_doc_at_created", i["ДатаВремяСоздания"])
                     except:
-                        print("var_doc_counterparty_inn", i["Контрагент"]["СвЮЛ"]["ИНН"])
-                        print("var_doc_counterparty_full_name", i["Контрагент"]["СвЮЛ"]["НазваниеПолное"])           
+                        print("var_doc_at_created", np.nan)
+                    
                     try:
-                        print("var_doc_provider_inn", i["НашаОрганизация"]["СвФЛ"]["ИНН"])
-                        print("var_doc_provider_full_name", i["НашаОрганизация"]["СвФЛ"]["НазваниеПолное"])
+                        try:
+                            print("var_doc_counterparty_inn", i["Контрагент"]["СвФЛ"]["ИНН"])
+                            print("var_doc_counterparty_full_name", i["Контрагент"]["СвФЛ"]["НазваниеПолное"])
+                        except:
+                            print("var_doc_counterparty_inn", i["Контрагент"]["СвЮЛ"]["ИНН"])
+                            print("var_doc_counterparty_full_name", i["Контрагент"]["СвЮЛ"]["НазваниеПолное"])  
                     except:
-                        print("var_doc_provider_inn", i["НашаОрганизация"]["СвЮЛ"]["ИНН"])
-                        print("var_doc_provider_full_name", i["НашаОрганизация"]["СвЮЛ"]["НазваниеПолное"])
+                        print("var_doc_counterparty_inn", np.nan)
+                        print("var_doc_counterparty_full_name", np.nan)                          
+
+                    try:
+                        try:
+                            print("var_doc_provider_inn", i["НашаОрганизация"]["СвФЛ"]["ИНН"])
+                            print("var_doc_provider_full_name", i["НашаОрганизация"]["СвФЛ"]["НазваниеПолное"])
+                        except:
+                            print("var_doc_provider_inn", i["НашаОрганизация"]["СвЮЛ"]["ИНН"])
+                            print("var_doc_provider_full_name", i["НашаОрганизация"]["СвЮЛ"]["НазваниеПолное"])
+                    except:
+                        print("var_doc_provider_inn", np.nan)
+                        print("var_doc_provider_full_name", np.nan)                        
                 
                     print("var_doc_assigned_manager", doc_manager_name)
                     try:
                         print("var_doc_department", i["Подразделение"]["Название"])
                     except:
                         print("var_doc_department", np.nan)
-                    print("автор:", " ".join(author_list).strip())
+
+                    try:
+                        print("автор:", " ".join(author_list).strip())
+                    except:
+                        print("автор:", np.nan)
                     
                 # common_part_print()
 
